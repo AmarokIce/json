@@ -555,10 +555,12 @@ public final class JsonPath {
         // error.in['here'
         //                ^
         IllegalArgumentException positionalError(String error) {
+            StringBuilder s = new StringBuilder();
+            for (int i = 0; i < pos; i ++) s.append(" ");
             return new IllegalArgumentException( // TODO Different exception type?
                                                  String.format("Invalid pattern: %s (at pos: %d)%n", error, pos)
                                                      + string + System.lineSeparator()
-                                                     + " ".repeat(pos) + "^"
+                                                     + s + "^"
             );
         }
 
