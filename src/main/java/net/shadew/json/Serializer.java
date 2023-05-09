@@ -41,11 +41,11 @@ class Serializer {
     }
 
     private void addSpaces(int count) throws IOException {
-        output.append(" ".repeat(count));
+        for (int i = 0; i < count; i ++) output.append(" ");
     }
 
     private void addTabs(int count) throws IOException {
-        output.append("\t".repeat(count));
+        for (int i = 0; i < count; i ++) output.append("\t");
     }
 
     private void addNewline() throws IOException {

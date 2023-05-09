@@ -39,10 +39,6 @@ publishing {
         maven {
             name = "ShwMaven"
             url = uri("https://maven.shadew.net/")
-            credentials {
-                username = shwMavenUser
-                password = shwMavenPass
-            }
         }
     }
 }

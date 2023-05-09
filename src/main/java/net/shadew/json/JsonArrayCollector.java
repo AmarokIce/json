@@ -1,5 +1,8 @@
 package net.shadew.json;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
@@ -30,9 +33,7 @@ enum JsonArrayCollector implements Collector<JsonNode, JsonNode, JsonNode> {
         return Function.identity();
     }
 
-    private static final Set<Characteristics> CHARACTERISTICS = Set.of(
-        Characteristics.IDENTITY_FINISH
-    );
+    private static final Set<Characteristics> CHARACTERISTICS = new HashSet<>(Collections.singletonList(Characteristics.IDENTITY_FINISH));
 
     @Override
     public Set<Characteristics> characteristics() {

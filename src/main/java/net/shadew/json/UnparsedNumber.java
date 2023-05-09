@@ -28,14 +28,14 @@ class UnparsedNumber extends Number {
     private String full() {
         if (full != null) return full;
 
-        String integral = number.toLowerCase(Locale.ROOT);
+        StringBuilder integral = new StringBuilder(number.toLowerCase(Locale.ROOT));
         String decimal = "";
         String exponent = "";
-        int dot = integral.indexOf('.');
+        int dot = integral.toString().indexOf('.');
 
         if (dot >= 0) {
-            String igr = integral;
-            integral = igr.substring(0, dot);
+            String igr = integral.toString();
+            integral = new StringBuilder(igr.substring(0, dot));
             decimal = igr.substring(dot + 1);
 
             int e = decimal.indexOf('e');
@@ -45,31 +45,31 @@ class UnparsedNumber extends Number {
                 exponent = dc.substring(e + 1);
             }
         } else {
-            int e = integral.indexOf('e');
+            int e = integral.toString().indexOf('e');
             if (e >= 0) {
-                String igr = integral;
-                integral = igr.substring(0, e);
+                String igr = integral.toString();
+                integral = new StringBuilder(igr.substring(0, e));
                 exponent = igr.substring(e + 1);
             }
         }
 
         boolean integralZero = false;
-        if (integral.isEmpty()) {
-            integral = "0";
+        if (integral.length() == 0) {
+            integral = new StringBuilder("0");
             integralZero = true;
         }
-        if (integral.equals("-")) {
-            integral = "-0";
+        if (integral.toString().equals("-")) {
+            integral = new StringBuilder("-0");
             integralZero = true;
         }
-        if (integral.equals("+")) {
-            integral = "0";
+        if (integral.toString().equals("+")) {
+            integral = new StringBuilder("0");
             integralZero = true;
         }
         zeroCheck:
         if (!integralZero) {
             int s = 0;
-            if (integral.startsWith("-") || integral.startsWith("+")) s = 1;
+            if (integral.toString().startsWith("-") || integral.toString().startsWith("+")) s = 1;
             for (int i = s, l = integral.length(); i < l; i++) {
                 if (integral.charAt(i) != '0')
                     break zeroCheck;
@@ -78,7 +78,7 @@ class UnparsedNumber extends Number {
         }
 
         boolean decimalZero = true;
-        String full = integral;
+        String full = integral.toString();
         if (!decimal.isEmpty()) {
             full += "." + decimal;
             decimalZero = false;
@@ -108,11 +108,11 @@ class UnparsedNumber extends Number {
                 if (comp < 0) {
                     integral = null;
                 } else if (comp > 0 && i.compareTo(BigInteger.TEN) <= 0) {
-                    integral += "0".repeat(i.intValue());
+                    for (int j = 0; j < i.intValue(); j ++) integral.append("0");
                 }
             }
         } else {
-            integral = "0";
+            integral = new StringBuilder("0");
             bigIntValue = BigInteger.ZERO;
             bigValue = BigDecimal.ZERO;
             value = 0;
@@ -122,7 +122,7 @@ class UnparsedNumber extends Number {
         }
 
         this.full = full;
-        this.integral = integral;
+        this.integral = integral.toString();
         this.isZero = integralZero && decimalZero;
         this.isIntegral = decimalZero;
         return full;

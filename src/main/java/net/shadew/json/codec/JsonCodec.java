@@ -211,7 +211,7 @@ public interface JsonCodec<A> {
      */
     @SafeVarargs
     static <A> JsonCodec<A> alternatives(JsonCodec<A>... options) {
-        return new CombinedCodec<>(List.of(options));
+        return new CombinedCodec<>(Arrays.asList(options));
     }
 
     /**
